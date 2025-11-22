@@ -1,0 +1,72 @@
+* {
+    margin: 0;
+    padding: 0;
+
+    scroll-behavior: smooth;
+}
+
+*,::after,::before {box-sizing: border-box;}
+
+html,body {height: 100%;}
+
+::selection {background-color: var(--navi-blue);}
+
+input,button,textarea,select {font: inherit;}
+
+a {text-decoration: none;}
+
+button {border: none;}
+
+br {
+    -webkit-user-select: none;
+    user-select: none;
+    -moz-user-select: none;
+}
+
+body {
+    background: var(--white);
+    color: var(--black);
+    transition: 0.2s ease-out;
+}
+
+body {
+    --navi-blue: #1a69e07c;
+    --white: #ffffff;
+    --black: #000000;
+
+    --header: #ffffff;
+    --header-on: #a9a9a9;
+    
+    --bg-editor-focus: #f0f8ff;
+    --bg-editor: #ffffff;
+
+    --button-bg: #6e6e6e;
+    --button-bg-hover: #9a9a9a;
+    --button-bg-active: #bebebe;
+    --button-border: #414141;
+
+    --text-color: #000000;
+
+    --darkmode-icon : url('moon.svg'); 
+}
+
+body.dark{
+     --navi-blue: #9c9c9cab;
+    --white: #1e1e1e;
+    --black: #eeeeee;
+
+    --header: #1e1e1e;
+    --header-on: #141414;
+
+    --bg-editor-focus: #181818;
+    --bg-editor: #222222;
+
+    --button-bg: #282828;
+    --button-bg-hover: #555555;
+    --button-bg-active: #222222;
+    --button-border: #868686;
+
+    --text-color: #ffffff;
+
+    --darkmode-icon : url('sun.svg'); 
+}

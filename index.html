@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <!--<link rel="icon" href="css/favicon.svg"/>-->
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="theme-color" content="#000000" />
+        <meta
+        name="description"
+        content="texto descripcion..."
+        />
+        <title> Textarea Editor </title>
+
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <link rel="stylesheet" type="text/css" href="css/header.css">
+        <link rel="stylesheet" type="text/css" href="css/content.css">
+
+        <script defer src="js/main.js"></script>
+    </head>
+    <body>
+        <header class="header-editor">
+            <nav>
+                <textarea id="logotext" class="logotext" maxlength="30">Textarea Editor</textarea>
+                
+                <div class="desktop-buttons"></div>
+                <div class="space-count" id="charCount"></div>
+                <div class="space-hour" id="clock"></div>
+                <div class="buttons">   
+                    <button onclick="saveToFile()" class="save-button">
+                        <div class="icon-save" id="icon-save"></div>
+                    </button>
+                    <button onclick="darkmode()" class="dark-mode-toggle">
+                        <div class="icon-button" id="icon-button"></div>
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <content class="content-editor">
+            <textarea id="codeEditor"><!-- Area para Escribir --></textarea>
+        </content>
+
+        <div class="space-hour-ex" id="clock2"></div>
+    </body>
+
+</html>
+
