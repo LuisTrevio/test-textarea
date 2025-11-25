@@ -46,6 +46,7 @@ body {
     --button-border: #414141;
 
     --text-color: #000000;
+    --text-color-btn: #ffffff;
 
     --darkmode-icon : url('moon.svg'); 
 }
@@ -67,6 +68,7 @@ body.dark{
     --button-border: #868686;
 
     --text-color: #ffffff;
+    --text-color-btn: #ffffff;
 
     --darkmode-icon : url('sun.svg'); 
 }

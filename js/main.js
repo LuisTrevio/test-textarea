@@ -1,8 +1,6 @@
 if (localStorage.getItem('dark-mode') === 'true' ) 
-    {document.body.classList.toggle('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#222222');}
-else 
-    {document.body.classList.remove('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff');}
-
+{document.body.classList.toggle('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#222222');}
+else {document.body.classList.remove('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff');}
 
 document.getElementById('codeEditor').addEventListener('keydown', function(e) {
     if (e.key === 'Tab') {
@@ -36,30 +34,55 @@ logotext.addEventListener('input', function() {
 });
 }
 
-if (window.innerWidth <= 786 && window.innerHeight <= 470) {
-        document.querySelector('.space-hour-ex').style.display = 'flex';
-        document.querySelector('.content-editor').style.display = 'none';
-        document.querySelector('.header-editor').style.display = 'none';
-    } else {
-        document.querySelector('.space-hour-ex').style.display = 'none';
-        document.querySelector('.content-editor').style.display = 'flex';
-        document.querySelector('.header-editor').style.display = 'flex';
-}
+document.querySelector('.space-hour').addEventListener('click', () => {
+    document.querySelector('.space-hour-ex').style.display = 'flex';
+    document.querySelector('.space-hour-ex').style.cursor = 'pointer';
+    document.querySelector('.content-editor').style.display = 'none';
+    document.querySelector('.header-editor').style.display = 'none';
+});
 
-window.addEventListener('resize', function() {
-    if (window.innerWidth <= 786 && window.innerHeight <= 470) {
-        document.querySelector('.space-hour-ex').style.display = 'flex';
-        document.querySelector('.content-editor').style.display = 'none';
-        document.querySelector('.header-editor').style.display = 'none';
-    } else {
-        document.querySelector('.space-hour-ex').style.display = 'none';
-        document.querySelector('.content-editor').style.display = 'flex';
-        document.querySelector('.header-editor').style.display = 'flex';
-    }
+document.querySelector('.space-hour-ex').addEventListener('click', () => {
+    document.querySelector('.space-hour-ex').style.display = 'none';
+    document.querySelector('.space-hour-ex').style.cursor = 'none';
+    document.querySelector('.content-editor').style.display = 'flex';
+    document.querySelector('.header-editor').style.display = 'flex';
 });
 
 //Primero preguntamos si el navegador soporta el API File System Access
 const supportsFileSystemAccess = 'showOpenFilePicker' in window && 'showSaveFilePicker' in window;
+
+function OpenFile() {
+    if (!supportsFileSystemAccess) {
+        alert('Tu navegador no soporta la API File System Access. Por favor, usa un navegador compatible como Chrome o Edge.');
+        return;
+    }  
+    const options = {
+        types: [
+            {
+                description: 'Text Files',
+                accept: {
+                    'text/plain': ['.txt', '.md', '.js', '.html', '.css']
+                }
+            }
+        ],
+        excludeAcceptAllOption: true,
+        multiple: false
+    };
+    window.showOpenFilePicker(options).then(async (fileHandles) => {
+        const fileHandle = fileHandles[0];
+        const file = await fileHandle.getFile();
+        const contents = await file.text();
+        document.getElementById('codeEditor').value = contents;
+        const charCount = contents.length;
+        document.getElementById('charCount').textContent = charCount + ' caracteres';
+    }).catch((err) => {
+        console.error(err);
+    });
+}
+
+function typeFile() {
+    alert('Solo se permite abrir y guardar archivos de texto plano (.txt, .md, .js, .html, .css).');
+}
 
 function saveToFile() {
     const textToSave = document.getElementById('codeEditor').value;
@@ -68,6 +91,30 @@ function saveToFile() {
     link.download = logotext.value ? logotext.value + '.txt' : 'document.txt';
     link.href = window.URL.createObjectURL(blob);
     link.click();
+}
+
+function SaveAs() {
+    if (!supportsFileSystemAccess) {
+        alert('Tu navegador no soporta la API File System Access. Por favor, usa un navegador compatible como Chrome o Edge.');
+        return;
+    }
+    const options = {
+        types: [
+            {
+                description: 'Text Files',
+                accept: {
+                    'text/plain': ['.txt', '.md', '.js', '.html', '.css']
+                }
+            }
+        ]
+    };
+    window.showSaveFilePicker(options).then(async (fileHandle) => {
+        const writable = await fileHandle.createWritable();
+        await writable.write(document.getElementById('codeEditor').value);
+        await writable.close();
+    }).catch((err) => {
+        console.error(err);
+    });
 }
 
 function darkmode() {
@@ -100,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('charCount').textContent = charCount + ' caracteres';
 });
 
-//Reloj hora local del usuario
+//Reloj hora local del usuario (Creo)
 function updateClock() {
     const now = new Date();
     let hours = now.getHours();
