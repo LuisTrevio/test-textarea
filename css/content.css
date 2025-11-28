@@ -22,7 +22,7 @@ content {
     line-height: 1.5;
     color: var(--text-color);
     background-color: var(--bg-editor);
-    padding: 45px 10px 10px 10px;
+    padding: 55px 10px 10px 10px;
     box-sizing: border-box;
     resize: none;
     outline: none;

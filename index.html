@@ -28,9 +28,18 @@
                     <button class="file-button" onclick="OpenFile()">
                         Abrir Archivo
                     </button>
-                    <button onclick="typeFile()" class="typefile-button">
+                    <a class="typefile-button">
                         .txt
-                    </button>
+                        <div class="border-box">
+                            <div class="box">
+                                <button class="option" data-sort=".txt">.txt</button>
+                                <button class="option" data-sort=".md">.md</button>
+                                <button class="option" data-sort=".html">.html</button>
+                                <button class="option" data-sort=".css">.css</button>
+                                <button class="option" data-sort=".js">.js</button>
+                            </div>
+                        </div>
+                    </a>
                     <button onclick="SaveAs()" class="save-as">
                         Guardar Como
                     </button>

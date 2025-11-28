@@ -80,19 +80,6 @@ function OpenFile() {
     });
 }
 
-function typeFile() {
-    alert('Solo se permite abrir y guardar archivos de texto plano (.txt, .md, .js, .html, .css).');
-}
-
-function saveToFile() {
-    const textToSave = document.getElementById('codeEditor').value;
-    const blob = new Blob([textToSave], { type: 'text/plain' });
-    const link = document.createElement('a');
-    link.download = logotext.value ? logotext.value + '.txt' : 'document.txt';
-    link.href = window.URL.createObjectURL(blob);
-    link.click();
-}
-
 function SaveAs() {
     if (!supportsFileSystemAccess) {
         alert('Tu navegador no soporta la API File System Access. Por favor, usa un navegador compatible como Chrome o Edge.');
@@ -163,3 +150,48 @@ function updateClock() {
 
 setInterval(updateClock, 1000);
 updateClock();
+
+// Cambia de formato de archivo en el botón Abrir Archivo y Guardar Como
+document.querySelectorAll('.typefile-button .option').forEach(button => {
+    button.addEventListener('click', () => {
+        const selectedFormat = button.getAttribute('data-sort');
+        document.querySelector('.typefile-button').setAttribute('data-selected', selectedFormat);
+        document.querySelector('.typefile-button').firstChild.textContent = selectedFormat;
+    });
+});
+
+function saveToFile() {
+    const textToSave = document.getElementById('codeEditor').value;
+    const selectedFormat = document.querySelector('.typefile-button').getAttribute('data-selected') || 'txt';
+    const logotext = document.querySelector('.logotext');
+    const filename = logotext.value ? logotext.value + '.' + selectedFormat : 'document.' + selectedFormat;
+    
+    const blob = new Blob([textToSave], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.download = filename;
+    link.href = window.URL.createObjectURL(blob);
+    link.click();
+}
+
+
+/*
+// resalta el codigo
+document.getElementById('codeEditor').addEventListener('input', function() {
+    const code = this.value;
+    const highlightedCode = code
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/(\/\/.*$)/gm, '<span class="comment">$1</span>') // comentarios
+        .replace(/(".*?"|'.*?'|`.*?`)/g, '<span class="string">$1</span>') // cadenas
+        .replace(/\b(function|return|var|let|const|if|else|for|while|break|continue|switch|case|default|new|this)\b/g, '<span class="keyword">$1</span>'); // palabras clave
+    document.getElementById('highlightedCode').innerHTML = highlightedCode;
+});
+
+// Inicializa el resaltado al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    const event = new Event('input');
+    document.getElementById('codeEditor').dispatchEvent(event);
+});
+
+*/
