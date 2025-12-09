@@ -230,8 +230,7 @@ document.addEventListener('click', (event) => {
 function Tick() {
     setInterval(() => {
     document.querySelectorAll('.block').forEach((result) => {result.classList.remove('effect-tick')});
-    }, 200);
-
+    }, 800);
 }
 
 /*
