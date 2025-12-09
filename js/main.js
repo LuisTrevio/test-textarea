@@ -106,7 +106,8 @@ function SaveAs() {
 
 function darkmode() {
     document.body.classList.toggle('dark');
-
+    document.querySelectorAll('.block').forEach((result) => {result.classList.add('effect-tick')});
+    Tick();
     if(document.body.classList.contains('dark')) {
         localStorage.setItem('dark-mode', 'true');
 
@@ -226,6 +227,12 @@ document.addEventListener('click', (event) => {
     }  
 });
 
+function Tick() {
+    setInterval(() => {
+    document.querySelectorAll('.block').forEach((result) => {result.classList.remove('effect-tick')});
+    }, 1000);
+
+}
 
 /*
 // resalta el codigo
