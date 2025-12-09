@@ -22,37 +22,87 @@
     <body ontouchstart="">
         <header class="header-editor">
             <nav>
-                <textarea id="logotext" class="logotext" maxlength="30" placeholder="Titulo">Textarea Editor</textarea>
-                
-                <div class="desktop-buttons">
-                    <button class="file-button" onclick="OpenFile()">
-                        Abrir Archivo
-                    </button>
-                    <a class="typefile-button">
-                        .txt
-                        <div class="border-box">
-                            <div class="box">
-                                <button class="option" data-sort=".txt">.txt</button>
-                                <button class="option" data-sort=".md">.md</button>
-                                <button class="option" data-sort=".html">.html</button>
-                                <button class="option" data-sort=".css">.css</button>
-                                <button class="option" data-sort=".js">.js</button>
-                            </div>
-                        </div>
-                    </a>
-                    <button onclick="SaveAs()" class="save-as">
-                        Guardar Como
-                    </button>
+                <div class="title-drop">
+                    <textarea id="logotext" class="logotext" maxlength="27" placeholder="Titulo">Textarea Editor</textarea>
                 </div>
-                <div class="space-count" id="charCount"></div>
-                <div class="space-hour" id="clock"></div>
-                <div class="buttons">   
-                    <button alt="Guardar archivo en TXT" onclick="saveToFile()" class="save-button">
-                        <div class="icon-save" id="icon-save"></div>
-                    </button>
-                    <button alt="Modo Oscuro" onclick="darkmode()" class="dark-mode-toggle">
-                        <div class="icon-button" id="icon-button"></div>
-                    </button>
+                <div class="separator">
+                    <div class="desktop-buttons">
+                        <a class="archivo">
+                            Archivo<span class="svg-tool"></span>
+                            <div class="border-box">
+                                <div class="box">
+                                    <button class="file-button left-text" onclick="OpenFile()">
+                                        Abrir Archivo
+                                    </button>
+                                    <button onclick="SaveAs()" class="save-as left-text">
+                                        Guardar Como
+                                    </button>
+                                    <button onclick="Print()" class="save-as left-text">
+                                        Imprimir
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                        <a class="editor">
+                            Editor<span class="svg-tool"></span>
+                            <div class="border-box">
+                                <div class="box">
+                                    <button class="copy left-text" onclick="Undo()">
+                                        Deshacer
+                                    </button>
+                                    <button onclick="Copy()" class="copy left-text">
+                                        Copiar
+                                    </button>
+                                    <button onclick="Paste()" class="copy left-text">
+                                        Pegar
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                        <a class="preferences">
+                            Vista<span class="svg-tool"></span>
+                            <div class="border-box">
+                                <div class="box">
+                                    <button class="symbo left-text">
+                                        Simbolos Especiales
+                                    </button>
+                                    <button class="symbo left-text">
+                                        Preferencias
+                                    </button>
+                                    <button onclick="darkmode()" class="darkmode-desk left-text">
+                                        <!-- Modo Oscuro -->
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="space-count" id="charCount"></div>
+                    <div class="space-hour" id="clock"></div>
+                    <div class="buttons">   
+                         <a class="typefile-button">
+                            txt <span class="svg-tool"></span>
+                            <div class="border-box">
+                                <div class="box">
+                                    <button class="option" data-sort="txt">txt</button>
+                                    <button class="option" data-sort="md">md</button>
+                                    <button class="option" data-sort="html">html</button>
+                                    <button class="option" data-sort="css">css</button>
+                                    <button class="option" data-sort="js">js</button>
+                                </div>
+                            </div>
+                        </a>
+                        <button class="copy" onclick="saveToFile()">
+                            Guardar
+                        </button>
+                    </div>
+                    <div class="buttons-mobile">   
+                        <button alt="Guardar archivo en TXT" onclick="saveToFile()" class="save-button">
+                            <div class="icon-save" id="icon-save"></div>
+                        </button>
+                        <button alt="Modo Oscuro" onclick="darkmode()" class="dark-mode-toggle">
+                            <div class="icon-button" id="icon-button"></div>
+                        </button>
+                    </div>
                 </div>
             </nav>
         </header>

@@ -1,6 +1,6 @@
 if (localStorage.getItem('dark-mode') === 'true' ) 
-{document.body.classList.toggle('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#222222');}
-else {document.body.classList.remove('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff');}
+{document.body.classList.toggle('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#222222');document.querySelector('.darkmode-desk').textContent = 'Modo Claro';}
+else {document.body.classList.remove('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff');document.querySelector('.darkmode-desk').textContent = 'Modo Oscuro';}
 
 document.getElementById('codeEditor').addEventListener('keydown', function(e) {
     if (e.key === 'Tab') {
@@ -25,11 +25,11 @@ if (window.innerWidth <= 786) {} else {
 const logotext = document.querySelector('.logotext');
 logotext.addEventListener('input', function() {
     const charCount = this.value.length;
-    var countPlus = charCount * 13;
+    var countPlus = charCount * 11.17;
     if (charCount > 15) {
         this.style.width = countPlus + 'px';
     } else {
-        this.style.width = '200px';
+        this.style.width = '170px';
     }
 });
 }
@@ -90,7 +90,7 @@ function SaveAs() {
             {
                 description: 'Text Files',
                 accept: {
-                    'text/plain': ['.txt', '.md', '.js', '.html', '.css']
+                    'text/plain': ['txt', 'md', 'js', 'html', 'css']
                 }
             }
         ]
@@ -112,14 +112,14 @@ function darkmode() {
 
         document.querySelectorAll('.st-w').forEach((result) => {result.classList.add('status-w-on')});
         document.querySelectorAll('.st-d').forEach((result) => {result.classList.remove('status-d-on')});
-    
+        document.querySelector('.darkmode-desk').textContent = 'Modo Claro';
         document.querySelector('meta[name="theme-color"]').setAttribute('content', '#222222');
     } else {
         localStorage.setItem('dark-mode', 'false');
 
         document.querySelectorAll('.st-w').forEach((result) => {result.classList.remove('status-w-on')});
         document.querySelectorAll('.st-d').forEach((result) => {result.classList.add('status-d-on')});
-    
+        document.querySelector('.darkmode-desk').textContent = 'Modo Oscuro';
         document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff');
     }
 }
@@ -173,6 +173,59 @@ function saveToFile() {
     link.click();
 }
 
+// toogle que despliega el box 
+document.querySelector('.typefile-button').addEventListener('click', () => {
+    const box = document.querySelector('.typefile-button .border-box');
+    box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+});
+
+document.querySelector('.archivo').addEventListener('click', () => {
+    const box = document.querySelector('.archivo .border-box');
+    box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+});
+
+document.querySelector('.editor').addEventListener('click', () => {
+    const box = document.querySelector('.editor .border-box');
+    box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+});
+
+document.querySelector('.preferences').addEventListener('click', () => {
+    const box = document.querySelector('.preferences .border-box');
+    box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+});
+
+document.addEventListener('click', (event) => {
+    const box = document.querySelector('.typefile-button .border-box');
+    const button = document.querySelector('.typefile-button');
+    if (!button.contains(event.target)) {
+        box.style.display = 'none';
+    }
+});
+
+document.addEventListener('click', (event) => {
+    const box = document.querySelector('.archivo .border-box');
+    const button = document.querySelector('.archivo');
+    if (!button.contains(event.target)) {
+        box.style.display = 'none';
+    }
+});
+
+document.addEventListener('click', (event) => {
+    const box = document.querySelector('.editor .border-box');
+    const button = document.querySelector('.editor');
+    if (!button.contains(event.target)) {
+        box.style.display = 'none';
+    }  
+});
+
+document.addEventListener('click', (event) => {
+    const box = document.querySelector('.preferences .border-box');
+    const button = document.querySelector('.preferences');
+    if (!button.contains(event.target)) {
+        box.style.display = 'none';
+    }  
+});
+
 
 /*
 // resalta el codigo
@@ -195,3 +248,56 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 */
+
+// Función para imprimir el contenido del editor
+function Print() {
+    const printWindow = window.open('', '', 'width=800,height=600');
+    printWindow.document.write('<html><head><title>Imprimir Documento</title>');
+    printWindow.document.write('<style>body { font-family: Arial, sans-serif; margin: 20px; } pre { white-space: pre-wrap; word-wrap: break-word; }</style>');
+    printWindow.document.write('</head><body>');
+    printWindow.document.write('<pre>' + document.getElementById('codeEditor').value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>');
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+}
+
+function Copy() {
+    const textToCopy = document.getElementById('codeEditor').value;
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        alert('Texto copiado al portapapeles');
+    }).catch(err => {
+        console.error('Error al copiar el texto: ', err);
+    });   
+}
+
+function Paste() {
+    navigator.clipboard.readText().then(text => {
+        const editor = document.getElementById('codeEditor');
+        const startPos = editor.selectionStart;
+        const endPos = editor.selectionEnd;
+        editor.value = editor.value.substring(0, startPos) + text + editor.value.substring(endPos);
+        editor.selectionStart = editor.selectionEnd = startPos + text.length;
+    }).catch(err => {
+        console.error('Error al pegar el texto: ', err);
+    });
+}
+
+function Undo() {
+    document.getElementById('codeEditor').value = document.getElementById('codeEditor').value.slice(0, -1);
+}
+
+// EL TEXTO SE GUARDA AUTOMATICAMENTE CADA 5 SEGUNDOS
+setInterval(() => {
+    const textToSave = document.getElementById('codeEditor').value;
+    localStorage.setItem('autosave', textToSave);
+}, 1000);
+
+// AL CARGAR LA PAGINA, SE RECUPERA EL TEXTO GUARDADO
+document.addEventListener('DOMContentLoaded', () => {
+    const savedText = localStorage.getItem('autosave');
+    if (savedText) {
+        document.getElementById('codeEditor').value = savedText;
+    }
+});

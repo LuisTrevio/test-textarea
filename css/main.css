@@ -49,6 +49,8 @@ body {
     --text-color-btn: #ffffff;
 
     --darkmode-icon : url('moon.svg'); 
+    --darkmode-text: 'Modo Oscuro';
+    --dark-svg: invert(1);
 }
 
 body.dark{
@@ -71,4 +73,20 @@ body.dark{
     --text-color-btn: #ffffff;
 
     --darkmode-icon : url('sun.svg'); 
+    --darkmode-text: 'Light Mode';
+    --dark-svg: invert(0);
+}
+
+.svg-tool {
+    width: 10px;
+    height: 100%;
+
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    transition: 0.2s ease-out;
+    background-image: url(toolsvg.svg);
+    margin-left: 2px;
+    filter: var(--dark-svg);
 }
