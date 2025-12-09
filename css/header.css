@@ -52,6 +52,8 @@ nav {
 @media (max-width:780px) {
     .title-drop {
         padding: 0;
+        width: fit-content;
+        height: 60px;
     }
 }
 
@@ -97,6 +99,13 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+@media (max-width:780px) {
+    .separator {
+        width: auto;
+        height: 60px;
+    }
 }
 
 .buttons {
