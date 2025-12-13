@@ -2,6 +2,52 @@ if (localStorage.getItem('dark-mode') === 'true' )
 {document.body.classList.toggle('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#222222');document.querySelector('.darkmode-desk').textContent = 'Modo Claro';}
 else {document.body.classList.remove('dark');document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff');document.querySelector('.darkmode-desk').textContent = 'Modo Oscuro';}
 
+
+function Pop() {
+    const toggleClasses = [
+        ['.Pop-Exit', 'Pop-out'],
+        ['.Status-Ani', 'Status-Animated'],
+        ['.scr-fr', 'scroll-frost'],
+        ['.close-up', 'Pop-Close-Up']
+    ];
+
+    toggleClasses.forEach(([selector, className]) => {
+        document.querySelectorAll(selector).forEach(result => result.classList.toggle(className));
+    });
+
+    const classesToRemove = [
+        'Pop-Save-Out',
+        'Pop-Menu-Out'
+    ];
+
+    classesToRemove.forEach(className => {
+        document.querySelectorAll(`.${className.replace('-Out', '-O')}`).forEach(result => {
+            result.classList.remove(className);
+        });
+    });
+
+}
+
+const popFunctions = [
+    ['PopSave', 'Pop-Save-O', 'Pop-Save-Out'],
+    ['PopMenu', 'Pop-Menu-O', 'Pop-Menu-Out']
+];
+
+popFunctions.forEach(([funcName, selector, className]) => {
+    window[funcName] = () => {
+        document.querySelectorAll(`.${selector}`).forEach(result => {
+            result.classList.add(className);
+        });
+    };
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && document.querySelector('.Pop-Exit.Pop-out')) {
+        Pop();
+    }
+});
+
+
 document.getElementById('codeEditor').addEventListener('keydown', function(e) {
     if (e.key === 'Tab') {
         e.preventDefault();
@@ -106,9 +152,6 @@ function SaveAs() {
 
 function darkmode() {
     document.body.classList.toggle('dark');
-    document.querySelector('.content-editor').style.display = 'none';
-    document.querySelector('.header-editor').style.display = 'none';
-    Tick();
     if(document.body.classList.contains('dark')) {
         localStorage.setItem('dark-mode', 'true');
 
@@ -162,9 +205,34 @@ document.querySelectorAll('.typefile-button .option').forEach(button => {
     });
 });
 
+// Typefile-mobile
+document.querySelectorAll('.typefile-mobile .option').forEach(button => {
+    button.addEventListener('click', () => {
+        const selectedFormat = button.getAttribute('data-sort');
+        document.querySelector('.typefile-mobile').setAttribute('data-selected', selectedFormat);
+        document.querySelector('.typefile-mobile').firstChild.textContent = selectedFormat;
+    });
+});
+
+// Guarda el contenido del editor en un archivo con el formato seleccionado
 function saveToFile() {
     const textToSave = document.getElementById('codeEditor').value;
     const selectedFormat = document.querySelector('.typefile-button').getAttribute('data-selected') || 'txt';
+    const logotext = document.querySelector('.logotext');
+    const filename = logotext.value ? logotext.value + '.' + selectedFormat : 'document.' + selectedFormat;
+    
+    const blob = new Blob([textToSave], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.download = filename;
+    link.href = window.URL.createObjectURL(blob);
+    link.click();
+}
+
+// Save As para dispositivos móviles (con elemento select)
+function saveToFileMobile() {
+    const textToSave = document.getElementById('codeEditor').value;
+    const selectElement = document.getElementById('formatSelect'); // ID del select
+    const selectedFormat = selectElement.value || 'txt';
     const logotext = document.querySelector('.logotext');
     const filename = logotext.value ? logotext.value + '.' + selectedFormat : 'document.' + selectedFormat;
     
@@ -317,3 +385,4 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('codeEditor').value = savedText;
     }
 });
+

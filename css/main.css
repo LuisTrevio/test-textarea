@@ -90,3 +90,23 @@ body.dark{
     margin-left: 2px;
     filter: var(--dark-svg);
 }
+
+@media (max-width: 780px) {
+.scroll-frost {
+    overflow: hidden;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+}
+
+.img-proyect {
+    width: 18px;
+    height: 18px;
+
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: var(--dark-svg);
+}
+.close-svg {background-image: url(maki_cross.svg); background-size: 68%;}
