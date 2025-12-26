@@ -17,6 +17,8 @@ function Pop() {
 
     const classesToRemove = [
         'Pop-Save-Out',
+        'Pop-New-Out',
+        'Pop-Symbols-Out',
         'Pop-Menu-Out'
     ];
 
@@ -30,6 +32,8 @@ function Pop() {
 
 const popFunctions = [
     ['PopSave', 'Pop-Save-O', 'Pop-Save-Out'],
+    ['PopNew', 'Pop-New-O', 'Pop-New-Out'],
+    ['PopSymbols', 'Pop-Symbols-O', 'Pop-Symbols-Out'],
     ['PopMenu', 'Pop-Menu-O', 'Pop-Menu-Out']
 ];
 
@@ -136,7 +140,7 @@ function SaveAs() {
             {
                 description: 'Text Files',
                 accept: {
-                    'text/plain': ['txt', 'md', 'js', 'html', 'css']
+                    'text/plain': ['.txt', '.md', '.js', '.html', '.css']
                 }
             }
         ]
@@ -304,35 +308,6 @@ document.addEventListener('click', (event) => {
     }  
 });
 
-function Tick() {
-    setInterval(() => {
-    document.querySelector('.content-editor').style.display = 'flex';
-    document.querySelector('.header-editor').style.display = 'flex';
-    }, 200);
-}
-
-/*
-// resalta el codigo
-document.getElementById('codeEditor').addEventListener('input', function() {
-    const code = this.value;
-    const highlightedCode = code
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/(\/\/.*$)/gm, '<span class="comment">$1</span>') // comentarios
-        .replace(/(".*?"|'.*?'|`.*?`)/g, '<span class="string">$1</span>') // cadenas
-        .replace(/\b(function|return|var|let|const|if|else|for|while|break|continue|switch|case|default|new|this)\b/g, '<span class="keyword">$1</span>'); // palabras clave
-    document.getElementById('highlightedCode').innerHTML = highlightedCode;
-});
-
-// Inicializa el resaltado al cargar la página
-document.addEventListener('DOMContentLoaded', function() {
-    const event = new Event('input');
-    document.getElementById('codeEditor').dispatchEvent(event);
-});
-
-*/
-
 // Función para imprimir el contenido del editor
 function Print() {
     const printWindow = window.open('', '', 'width=800,height=600');
@@ -347,10 +322,26 @@ function Print() {
     printWindow.close();
 }
 
+// New File
+function NewFile() {
+    document.getElementById('codeEditor').value = '';
+    document.getElementById('charCount').textContent = '0 caracteres';
+    const alertBox = document.querySelector('.alert-newfile');
+    alertBox.style.opacity = '1';
+    setTimeout(() => {
+        alertBox.style.opacity = '0';
+    }, 2000);
+}
+
 function Copy() {
     const textToCopy = document.getElementById('codeEditor').value;
     navigator.clipboard.writeText(textToCopy).then(() => {
-        alert('Texto copiado al portapapeles');
+        const alertBox = document.querySelector('.alert-copy');
+        alertBox.style.opacity = '1';
+        setTimeout(() => {
+            alertBox.style.opacity = '0';
+        }, 2000);
+
     }).catch(err => {
         console.error('Error al copiar el texto: ', err);
     });   
@@ -363,6 +354,11 @@ function Paste() {
         const endPos = editor.selectionEnd;
         editor.value = editor.value.substring(0, startPos) + text + editor.value.substring(endPos);
         editor.selectionStart = editor.selectionEnd = startPos + text.length;
+        const alertBox = document.querySelector('.alert-paste');
+        alertBox.style.opacity = '1';
+        setTimeout(() => {
+            alertBox.style.opacity = '0';
+        }, 2000);
     }).catch(err => {
         console.error('Error al pegar el texto: ', err);
     });
@@ -370,13 +366,17 @@ function Paste() {
 
 function Undo() {
     document.getElementById('codeEditor').value = document.getElementById('codeEditor').value.slice(0, -1);
+    const alertBox = document.querySelector('.alert-undo');
+    alertBox.style.opacity = '1';
+    setTimeout(() => {
+        alertBox.style.opacity = '0';
+    }, 2000);
 }
 
-// EL TEXTO SE GUARDA AUTOMATICAMENTE CADA 5 SEGUNDOS
-setInterval(() => {
+function update() {
     const textToSave = document.getElementById('codeEditor').value;
     localStorage.setItem('autosave', textToSave);
-}, 1000);
+}
 
 // AL CARGAR LA PAGINA, SE RECUPERA EL TEXTO GUARDADO
 document.addEventListener('DOMContentLoaded', () => {
@@ -386,3 +386,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// insertSymbol function
+function insertSymbol(symbol) {
+    const editor = document.getElementById('codeEditor');
+    const startPos = editor.selectionStart;
+    const endPos = editor.selectionEnd;
+    editor.value = editor.value.substring(0, startPos) + symbol + editor.value.substring(endPos);
+    editor.selectionStart = editor.selectionEnd = startPos + symbol.length;
+    editor.focus();
+}
+
+
+// Resaltado de sintaxis básico
+function highlightSyntax() {
+    const editor = document.getElementById('codeEditor');
+    let content = editor.value;
+    content = content.replace(/(\/\/.*$)/gm, '<span class="comment">$1</span>'); // Comentarios
+    content = content.replace(/(".*?"|'.*?')/g, '<span class="string">$1</span>'); // Cadenas
+    content = content.replace(/\b(function|var|let|const|if|else|for|while|return|class|new|try|catch)\b/g, '<span class="keyword">$1</span>');
+    editor.innerHTML = content;
+}

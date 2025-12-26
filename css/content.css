@@ -166,7 +166,7 @@ content {
     .Pop-Close:active{background-color: var(--buttons-hover); border: 2px solid var(--white);}
 }
 
-.Pop-Save {
+.Pop-Save, .Pop-New, .Pop-Menu, .Pop-Symbols {
     width: 50ch;
     max-width: 720px;
     height: fit-content;
@@ -187,7 +187,7 @@ content {
     border-radius: 0;
     z-index: 5;
 
-    transform: scale(0.98) translate(0, 50px);
+    transform: scale(0.98) translate(0, 25px);
     opacity: 0;
     visibility: hidden;
     
@@ -208,8 +208,8 @@ content {
     line-height: 1.4;
 }
 
-.Pop-Save-Out {
-    transform: scale(1) translate(0, 50px);
+.Pop-Save-Out , .Pop-New-Out, .Pop-Menu-Out, .Pop-Symbols-Out {
+    transform: scale(1) translate(0, 25px);
     opacity: 1;
       visibility: visible;
     pointer-events: all;
@@ -218,7 +218,7 @@ content {
 }
 
 @media (max-width: 780px) {
-    .Pop-Save {
+    .Pop-Save, .Pop-New, .Pop-Menu, .Pop-Symbols {
         width: 94%;
         height: auto;
 
@@ -227,7 +227,7 @@ content {
         padding: 20px 20px 30px 20px;
         margin: 3%;
 
-        transform: translate(0,267px);
+        transform: translate(0,0) scale(0.95);
         filter: blur(2.75px);
         transition:0.300s, cubic-bezier cubic-bezier(0.41, 0.1, 0.13, 1);
         inset: auto auto 0 0;
@@ -236,7 +236,7 @@ content {
         border: 0.89px solid var(--button-border);
     }
 
-    .Pop-Save-Out{
+    .Pop-Save-Out, .Pop-New-Out, .Pop-Menu-Out, .Pop-Symbols-Out {
         transform: translate(0,0);
         opacity: 1;
         box-shadow: none;
@@ -320,4 +320,43 @@ content {
     resize: none;
     outline: none;
     box-sizing: border-box;
+}
+
+.symbols-container {
+    width: 100%;
+    height: auto;
+
+    margin-top: 10px;
+    padding: 10px;
+
+    color: var(--text-color);
+
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
+
+    display: grid;
+    flex-wrap: wrap;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill,minmax(3rem,1fr));
+    gap: 10px;
+
+    transition: 0.2s ease-out;
+}
+
+.symbol-button {
+    width: 50px;
+    height: 50px;
+
+    padding: 0 10px;
+
+    background-color: var(--button-bg);
+    border: 0.89px solid var(--button-border);
+    color: var(--text-color-btn);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.2s ease-out;
 }

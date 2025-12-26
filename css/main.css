@@ -91,14 +91,7 @@ body.dark{
     filter: var(--dark-svg);
 }
 
-@media (max-width: 780px) {
-.scroll-frost {
-    overflow: hidden;
-}
-::-webkit-scrollbar {
-    display: none;
-}
-}
+@media (max-width: 780px) {.scroll-frost {overflow: hidden;}::-webkit-scrollbar {display: none;}}
 
 .img-proyect {
     width: 18px;

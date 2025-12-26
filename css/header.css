@@ -228,6 +228,26 @@ nav {
     }
 }
 
+.alert-copy, .alert-undo, .alert-paste, .alert-newfile {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--bg-editor);
+    border: 0.89px solid var(--button-border);
+    color: var(--text-color);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 3;
+
+    user-select: none;
+    pointer-events: none;
+}
+
 .file-button, 
 .archivo, 
 .editor, 
@@ -238,7 +258,7 @@ nav {
 .darkmode-desk, 
 .symbo {
     width: auto;
-    height: 22px;
+    height: 25px;
     padding: 0 10px;
     margin-left: 10px;
 
